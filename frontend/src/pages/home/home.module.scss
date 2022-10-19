@@ -1,0 +1,49 @@
+.promo {
+	& .wrapper {
+		display: flex;
+		padding: 40px 0;
+		gap: 20px;
+		width: 100%;
+		& .search {
+			min-width: 30%;
+		}
+		& .cards {
+			display: flex;
+    		justify-content: space-between;
+    		flex-wrap: wrap;
+			 gap: 17px;
+		}
+	}
+}
+
+@media (max-width: 1024px) {
+	.promo {
+		& .wrapper {
+			& .search {
+				width: 100%;
+			}
+		& .cards {
+				justify-content: center;
+				width: 100%;
+			}
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.promo {
+		& .wrapper {
+			display: flex;
+			flex-direction: column;
+			& .search {
+				width: 100%;
+			}
+		& .cards {
+				justify-content: center;
+				width: 100%;
+			}
+		}
+	}
+}
+
+

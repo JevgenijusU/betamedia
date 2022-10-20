@@ -1,6 +1,6 @@
 .deal {
 	position: relative;
-	width: 350px;
+	width: 100%;
    min-height: 478px;
 	background-color:	#F8F8F8;
 	& .galleryWrapper {
@@ -96,10 +96,20 @@
 	}
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
 	.deal {
-		width: 400px;
+		width: 100%;
 	}
 }
 
+@media (max-width: 768px) {
+	.deal {
+		width: 89%;
+	}
+}
 
+@media (max-width: 426px) {
+	.deal {
+		width: 100%;
+	}
+}

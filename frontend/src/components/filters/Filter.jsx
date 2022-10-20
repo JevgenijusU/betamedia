@@ -1,13 +1,12 @@
-import React from "react";
-import "./searchCatalog.scss";
+import React, { useState } from "react";
+import Accordion from "react-bootstrap/Accordion";
+import ReactSlider from "react-slider";
+import PropTypes from "prop-types";
 import ClockNights from "../../images/clock-nights.svg";
 import City from "../../images/city.svg";
 import People from "../../images/people.svg";
 import Price from "../../images/price.svg";
-import Accordion from "react-bootstrap/Accordion";
-import ReactSlider from "react-slider";
-import { useState } from "react";
-import PropTypes, { string } from "prop-types";
+import "./filter.scss";
 
 const CITY_OPTIONS = [
   {
@@ -70,10 +69,7 @@ const PERSON_OPTIONS = [
   },
 ];
 
-const SearchCatalog = (props) => {
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(500);
-
+const Filter = (props) => {
   return (
     <Accordion alwaysOpen>
       <Accordion.Item eventKey="0">
@@ -146,7 +142,7 @@ const SearchCatalog = (props) => {
         <Accordion.Body>
           <div className="slider-container">
             <ReactSlider
-              defaultValue={[min, max]}
+              defaultValue={[props.minPrice, props.maxPrice]}
               className="slider"
               trackClassName="tracker"
               min={0}
@@ -162,16 +158,16 @@ const SearchCatalog = (props) => {
                 return <div {...props} className="track"></div>;
               }}
               onChange={([min, max]) => {
-                setMin(min);
-                setMax(max);
+                props.setMinPrice(min);
+                props.setMaxPrice(max);
               }}
             />
             <div className="values-wrapper">
               <div className="values">
-                <span>{min}</span>
+                <span>{props.minPrice}</span>
               </div>
               <div className="values">
-                <span>{max}</span>
+                <span>{props.maxPrice}</span>
               </div>
             </div>
           </div>
@@ -181,13 +177,17 @@ const SearchCatalog = (props) => {
   );
 };
 
-SearchCatalog.propTypes = {
+Filter.propTypes = {
   selectedCities: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   toggleCity: PropTypes.func.isRequired,
   selectedNights: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   toggleNight: PropTypes.func.isRequired,
   selectedPersons: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   togglePerson: PropTypes.func.isRequired,
+  minPrice: PropTypes.number.isRequired,
+  setMinPrice: PropTypes.func.isRequired,
+  maxPrice: PropTypes.number.isRequired,
+  setMaxPrice: PropTypes.func.isRequired,
 };
 
-export default SearchCatalog;
+export default Filter;

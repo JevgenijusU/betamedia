@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/header/Header";
-import OfferCard from "../../components/offerCard/OfferCard";
-import SearchCatalog from "../../components/searchCatalog/SearchCatalog";
-import { Container } from "../../components/container/Container";
+import Filter from "../../components/filters/Filter";
+import Container from "../../components/container/Container";
+import SearchResults from "../../components/searchResults/SearchResults";
 import style from "./home.module.scss";
 
 const getOffers = () =>
@@ -20,6 +20,8 @@ const Home = () => {
   const [selectedCities, setSelectedCities] = useState([]);
   const [selectedNights, setSelectedNights] = useState([]);
   const [selectedPersons, setSelectedPersons] = useState([]);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(500);
 
   const toggleCity = (selectedCity) => {
     setSelectedCities((currentlySelectedCities) => {
@@ -69,7 +71,9 @@ const Home = () => {
         ? selectedPersons.includes(offer.person)
         : true;
 
-    return matchesCities && matchesNights && matchesPersons;
+    const matchesPrice = minPrice <= offer.price && offer.price <= maxPrice;
+
+    return matchesCities && matchesNights && matchesPersons && matchesPrice;
   });
 
   useEffect(() => {
@@ -95,34 +99,25 @@ const Home = () => {
       <Container>
         <div className={style.wrapper}>
           <div className={style.search}>
-            <SearchCatalog
+            <Filter
               selectedCities={selectedCities}
               toggleCity={toggleCity}
               selectedNights={selectedNights}
               toggleNight={toggleNight}
               selectedPersons={selectedPersons}
               togglePerson={togglePerson}
+              minPrice={minPrice}
+              setMinPrice={setMinPrice}
+              maxPrice={maxPrice}
+              setMaxPrice={setMaxPrice}
             />
           </div>
           <div className={style.cards}>
-            {offersStatus === "loading" && "loading"}
-            {offersStatus === "error" && "error"}
-            {offersStatus === "loaded" &&
-              filteredOffers.map((offer) => (
-                <OfferCard
-                  key={offer.id}
-                  title={offer.title}
-                  subtitle={offer.subtitle}
-                  location={offer.location}
-                  price={offer.price}
-                  tags={offer.tags}
-                  originalPrice={offer.originalPrice}
-                  discountMessage={offer.discountMessage}
-                  person={offer.person}
-                  night={offer.night}
-                  date={offer.date}
-                />
-              ))}
+            {offersStatus === "loading" && "Loading"}
+            {offersStatus === "error" && "Error"}
+            {offersStatus === "loaded" && (
+              <SearchResults offers={filteredOffers} />
+            )}
           </div>
         </div>
       </Container>

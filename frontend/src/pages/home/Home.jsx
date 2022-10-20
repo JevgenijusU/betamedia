@@ -113,8 +113,12 @@ const Home = () => {
             />
           </div>
           <div className={style.cards}>
-            {offersStatus === "loading" && "Loading"}
-            {offersStatus === "error" && "Error"}
+            {offersStatus === "loading" && (
+              <div className={style.loading}>Loading</div>
+            )}
+            {offersStatus === "error" && (
+              <div className={style.error}>Error</div>
+            )}
             {offersStatus === "loaded" && (
               <SearchResults offers={filteredOffers} />
             )}

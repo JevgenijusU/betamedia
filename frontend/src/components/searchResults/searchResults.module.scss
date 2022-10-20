@@ -1,0 +1,11 @@
+.noResults {
+  display: flex;
+  position: absolute;
+  min-width: 103px;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bolder;
+  font-size: 20px;
+}
